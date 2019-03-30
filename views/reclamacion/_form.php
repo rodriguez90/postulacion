@@ -33,34 +33,68 @@ if($user) {
 
                     <?php
                     if($isHHRR !== null || $isAdmin !== null) {
-                        $form->field($model, 'docente_id')->widget(
-                            \kartik\select2\Select2::class,
-                            [
-                                'data' => \yii\helpers\ArrayHelper::map(\app\models\Docente::find()->all(), 'user_id', 'primer_nombre'),
-                                'value' => $model->isNewRecord ? '' : $model->docente_id,
-                                'options' => ['placeholder' => 'Seleccione el Docente.'],
-                                'pluginOptions' => [
-                                    'allowClear' => false
-                                ],
-                            ]
-                        );
+
+                        echo Html::label(
+                            'Docente: ' . $model->docente->primer_apellido . ' ' . $model->docente->primer_apellido);
+
+                        echo $form->field($model, 'docente_id')
+                            ->textInput([
+                                'readonly'=>true,
+                                'value' => $model->docente->primer_apellido . ' ' . $model->docente->primer_apellido
+                            ])
+                            ->hiddenInput()
+                            ->label(false);
+
+//                        echo $form->field($model, 'docente_id')->widget(
+//                            \kartik\select2\Select2::class,
+//                            [
+//                                'data' => \yii\helpers\ArrayHelper::map(\app\models\Docente::find()->all(), 'usuario_id', 'primer_nombre'),
+//                                'value' => $model->isNewRecord ? '' : $model->docente_id,
+//                                'disabled' => $model->isNewRecord ? false : true,
+//                                'options' => [
+//                                    'placeholder' => 'Seleccione el Docente.',
+//                                ],
+//                                'pluginOptions' => [
+//                                    'allowClear' => false
+//                                ],
+//                            ]
+//                        );
                     }
                     else {
-                        $model->docente_id = Yii::$app->user->getId();
+                        if($model->isNewRecord)
+                            $model->docente_id = Yii::$app->user->getId();
+
                         echo $form->field($model, 'docente_id')
-//                        ->textInput(['readonly' => true,
-//                            'value' => Yii::$app->user->getId()])
-                        ->hiddenInput()
-                        ->label(false);
+                            ->hiddenInput()
+                            ->label(false);
                     }
                     ?>
 
-                    <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+                    <?php
+                    echo $form->field($model, 'descripcion')
+                        ->textarea([
+                            'rows' => 6,
+                            'readonly'=> $isHHRR !== null  || $isAdmin !== null,
+                            'disabled'=> $isHHRR !== null  || $isAdmin !== null
+                        ])
+                    ?>
 
                     <?php
-                    if($isHHRR !== null || $isAdmin !== null) {
-                        echo $form->field($model, 'procede')
-                            ->textInput();
+                    if($isHHRR !== null || $isAdmin !== null) { // es un docente
+//                        echo $form->field($model, 'procede')
+//                            ->textInput();
+
+                        echo $form->field($model, 'procede')->widget(\kartik\widgets\SwitchInput::className(),[
+                            'bsVersion' => '3.x',
+                            'inlineLabel'=>false,
+                            'pluginOptions'=>[
+                                'size'=>'mini',
+                                'onText'=>'Procede',
+                                'offText'=>'No Procede',
+                                'onColor'=>'success',
+                                'offColor'=>'danger',
+                            ],
+                        ]);
                     }
                     else {
                         $model->procede = $model->isNewRecord  ? false : $model->procede;

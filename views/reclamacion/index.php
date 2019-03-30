@@ -19,40 +19,41 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a('Nueva Reclamación', ['create'], ['class' => 'btn btn-success']) ?>
                 </p>
             </div>
-            <?php Pjax::begin(); ?>
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <div class="box-body">
+                <?php Pjax::begin(); ?>
+                <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                    'id',
-                    [
-                        'attribute'=>'docente',
-                        'format' => 'raw',
-                        'value' => function(\app\models\Reclamacion $model) {
-                            return $model->docente->primer_nombre . ' '.  $model->docente->primer_apellido ;
-                        }
-                    ],
-                    'descripcion:ntext',
-                    [
-                        'attribute'=>'procede',
-                        'format' => 'raw',
-                        'value' => function(\app\models\Reclamacion $model) {
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        'id',
+                        [
+                            'attribute'=>'docente',
+                            'format' => 'raw',
+                            'value' => function(\app\models\Reclamacion $model) {
+                                return $model->docente->primer_nombre . ' '.  $model->docente->primer_apellido ;
+                            }
+                        ],
+                        'descripcion:ntext',
+                        [
+                            'attribute'=>'procede',
+                            'format' => 'raw',
+                            'value' => function(\app\models\Reclamacion $model) {
                                 return $model->procede ? 'Si' : 'No';
-                        },
-                        'filter' => [
+                            },
+                            'filter' => [
                                 1 => 'Si',
                                 0 => 'No'
-                        ]
-                    ],
-                    'fecha_creacion:date',
+                            ]
+                        ],
+                        'fecha_creacion:date',
 
-                    ['class' => 'yii\grid\ActionColumn'],
-                ],
-            ]); ?>
-            <?php Pjax::end(); ?>
+                        ['class' => 'yii\grid\ActionColumn'],
+                    ],
+                ]); ?>
+                <?php Pjax::end(); ?>
+            </div>
         </div>
     </div>
-</div>
 </div>
