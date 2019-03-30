@@ -51,7 +51,7 @@ class Postulacion extends \yii\db\ActiveRecord
             'docente_id' => 'Docente',
             'documento_id' => 'Documento',
             'puntuacion' => 'Puntuación',
-            'fecha_creacion' => 'Fecha Creacion',
+            'fecha_creacion' => 'Fecha',
         ];
     }
 

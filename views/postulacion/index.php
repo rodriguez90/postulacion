@@ -7,33 +7,40 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\PostulacionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Postulacions';
+$this->title = 'Postulaciones';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="postulacion-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header">
+                <p>
+                    <?= Html::a('Nueva Postulación', ['create'], ['class' => 'btn btn-success']) ?>
+                </p>
+            </div>
 
-    <p>
-        <?= Html::a('Nuevo Postulacion', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+            <div class="box-body">
+                <?php Pjax::begin(); ?>
+                <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'docente_id',
-            'documento_id',
-            'puntuacion',
-            'fecha_creacion',
+                        'id',
+                        'docente_id',
+                        'documento_id',
+                        'puntuacion',
+                        'fecha_creacion',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-    <?php Pjax::end(); ?>
+                        ['class' => 'yii\grid\ActionColumn'],
+                    ],
+                ]); ?>
+                <?php Pjax::end(); ?>
+            </div>
+        </div>
+    </div>
 </div>
