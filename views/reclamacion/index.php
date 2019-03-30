@@ -26,13 +26,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-
                     'id',
-                    'docente_id',
+                    [
+                        'attribute'=>'docente',
+                        'format' => 'raw',
+                        'value' => function(\app\models\Reclamacion $model) {
+                            return $model->docente->primer_nombre . ' '.  $model->docente->primer_apellido ;
+                        }
+                    ],
                     'descripcion:ntext',
-                    'procede',
-                    'fecha_creacion',
+                    [
+                        'attribute'=>'procede',
+                        'format' => 'raw',
+                        'value' => function(\app\models\Reclamacion $model) {
+                                return $model->procede ? 'Si' : 'No';
+                        },
+                        'filter' => [
+                                1 => 'Si',
+                                0 => 'No'
+                        ]
+                    ],
+                    'fecha_creacion:date',
 
                     ['class' => 'yii\grid\ActionColumn'],
                 ],

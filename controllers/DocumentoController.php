@@ -9,6 +9,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use Da\User\Filter\AccessRuleFilter;
+use yii\filters\AccessControl;
+
 /**
  * DocumentoController implements the CRUD actions for Documento model.
  */
@@ -25,6 +28,44 @@ class DocumentoController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'ruleConfig' => [
+                        'class' => AccessRuleFilter::class,
+                    ],
+                    'rules' => [
+                        [
+                            'actions' => ['index'],
+                            'allow' => true,
+                            'roles' => ['documento/index'],
+                        ],
+                        [
+                            'actions' => ['create'],
+                            'allow' => true,
+                            'roles' => ['documento/create'],
+                        ],
+                        [
+                            'actions' => ['update'],
+                            'allow' => true,
+                            'roles' => ['documento/update'],
+                        ],
+                        [
+                            'actions' => ['delete'],
+                            'allow' => true,
+                            'roles' => ['documento/delete'],
+                        ],
+                        [
+                            'actions' => ['list'],
+                            'allow' => true,
+                            'roles' => ['documento/list'],
+                        ],
+                        [
+                            'actions' => ['view'],
+                            'allow' => true,
+                            'roles' => ['documento/view'],
+                        ],
+                    ],
+                ]
             ],
         ];
     }

@@ -7,14 +7,15 @@
  */
 
 namespace app\rbac;
+use app\models\Postulacion;
 use yii\rbac\Item;
 use yii\rbac\Rule;
 use app\models\Payment;
 
 
-class PaymentRule extends Rule
+class PostulacionRule extends Rule
 {
-    public $name = 'isCollector';
+    public $name = 'isDocente';
 
     public function execute($user, $item, $params)
     {
@@ -29,13 +30,13 @@ class PaymentRule extends Rule
         {
                 $result = true;
         }
-		else if( isset($params['payments']))
+		else if( isset($params['postulaciones']))
         {
             $result = true;
-            foreach ($params['payments'] as $paymentID )
+            foreach ($params['postulaciones'] as $postulacionId )
             {
-                $payment = Payment::findOne($paymentID);
-                if($payment->collector_id !== $user)
+                $postulacion = Postulacion::findOne(['id'=>$postulacionId]);
+                if($postulacion->docente_id !== $user)
                 {
                     $result = false;
                     break;

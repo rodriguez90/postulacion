@@ -10,6 +10,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\ContactForm;
 
+
 class SiteController extends Controller
 {
     /**
@@ -23,17 +24,20 @@ class SiteController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRuleFilter::class,
                 ],
-//                'only' => ['error'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'logout'],
+                        'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ],                    
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                     [
                         'actions' => ['error'],
                         'allow' => true,
-//                        'roles' => ['?'],
                     ],
                 ],
             ],

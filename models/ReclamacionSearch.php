@@ -12,6 +12,7 @@ use app\models\Reclamacion;
  */
 class ReclamacionSearch extends Reclamacion
 {
+    public $docente;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +20,7 @@ class ReclamacionSearch extends Reclamacion
     {
         return [
             [['id', 'docente_id', 'procede'], 'integer'],
-            [['descripcion', 'fecha_creacion'], 'safe'],
+            [['descripcion', 'fecha_creacion', 'docente'], 'safe'],
         ];
     }
 
@@ -41,13 +42,35 @@ class ReclamacionSearch extends Reclamacion
      */
     public function search($params)
     {
+
+        $user = Yii::$app->user;
+        $isHHRR = null;
+        $isAdmin = null;
+        if($user) {
+            $isHHRR = Yii::$app->authManager->getAssignment('HHRR', $user->getId());
+            $isAdmin = Yii::$app->authManager->getAssignment('Administrador', $user->getId());
+        }
+
         $query = Reclamacion::find();
 
         // add conditions that should always apply here
 
+        $query->joinWith(['docente']);
+        $query->orderBy(['reclamacion.id'=>SORT_DESC]);
+
+        if($isHHRR == null && $isAdmin == null) {
+            $query->where(['reclamacion.docente_id'=>$user->getId()]);
+        }
+
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['docente'] = [
+            'asc'=>['docente.primer_nombre' => SORT_ASC],
+            'desc'=>['docente.primer_nombre'=> SORT_DESC] ,
+        ];
 
         $this->load($params);
 
@@ -60,12 +83,15 @@ class ReclamacionSearch extends Reclamacion
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'docente_id' => $this->docente_id,
             'procede' => $this->procede,
             'fecha_creacion' => $this->fecha_creacion,
         ]);
 
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
+        $query->orFilterWhere(['like', 'docente.primer_nombre', $this->docente]);
+        $query->orFilterWhere(['like', 'docente.segundo_nombre', $this->docente]);
+        $query->orFilterWhere(['like', 'docente.primer_apellido', $this->docente]);
+        $query->orFilterWhere(['like', 'docente.segundo_apellido', $this->docente]);
 
         return $dataProvider;
     }

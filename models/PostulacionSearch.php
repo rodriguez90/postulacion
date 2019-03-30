@@ -42,6 +42,7 @@ class PostulacionSearch extends Postulacion
      */
     public function search($params)
     {
+        $user = Yii::$app->user->identity;
         $query = Postulacion::find();
 
         // add conditions that should always apply here
