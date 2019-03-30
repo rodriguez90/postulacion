@@ -47,9 +47,9 @@ class Reclamacion extends \yii\db\ActiveRecord
         return [
             'id' => 'No.',
             'docente_id' => 'Docente',
-            'descripcion' => 'Contenido',
+            'descripcion' => 'Reclamación',
             'procede' => 'Procede',
-            'fecha_creacion' => 'Fecha Creacion',
+            'fecha_creacion' => 'Fecha',
         ];
     }
 

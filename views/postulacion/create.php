@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Postulacion */
 
-$this->title = 'Create Postulacion';
+$this->title = 'Nuevo Postulacion';
 $this->params['breadcrumbs'][] = ['label' => 'Postulacions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

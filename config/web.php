@@ -13,7 +13,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'language' => 'es',
-    'name'=>'Loan',
+    'name'=>'Postulaciones',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -70,37 +70,32 @@ $config = [
         'as AccessBehavior' => [
             'class' => '\app\components\AccessBehavior'
         ],
-//            'assetManager' => [
-//                'bundles' => [
-//                    'dosamigos\google\maps\MapAsset' => [
-//                        'options' => [
-//                            'key' => 'this_is_my_key',
-////                            235137657038-qo4i4essgutmqe7ngk073s2hm67che6b.apps.googleusercontent.com
-////                            ID de cliente:
-////235137657038-qo4i4essgutmqe7ngk073s2hm67che6b.apps.googleusercontent.com
-////   Secreto de cliente:
-////RDfTwb5xRT6Y6csECBn62Hq2
-//                            'language' => 'id',
-//                            'version' => '3.1.18'
-//                        ]
-//                    ]
-//                ]
-//            ],
-//        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@Da/User/resources/views' => '@app/views/user'
+                ]
+            ]
+        ]
     ],
     'modules' => [
         'user' => [
             'class' => Da\User\Module::class,
+            'viewPath' => '@Da/User/resources/views',
+            'classMap' => [
+                'RegistrationForm' => 'app\forms\RegistrationForm',
+            ],
+            'controllerMap' => [
+                'registration' => 'app\controllers\RegistrationController'
+            ],
             'administrators'=>['root'],
-            'administratorPermissionName'=>'admin',
+            'administratorPermissionName'=>'Administrador',
             'enableRegistration'=>true,
-            'enableEmailConfirmation'=>true,
+            'enableEmailConfirmation'=>false,
+            'enableFlashMessages'=>false,
             'allowUnconfirmedEmailLogin'=>true,
-            'allowAccountDelete'=>true,
-
-            // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
-            // 'generatePasswords' => true,
-            // 'switchIdentitySessionKey' => 'myown_usuario_admin_user_key',
+            'allowAccountDelete'=>false,
+            'generatePasswords'=>false,
         ],
     ],
     'params' => $params,

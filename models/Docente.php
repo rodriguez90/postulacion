@@ -61,6 +61,7 @@ class Docente extends \yii\db\ActiveRecord
             'telefono' => 'Teléfono',
             'email' => 'Email',
             'fecha_creacion' => 'Fecha Creacion',
+            'titulodocentes' => 'Títulos',
         ];
     }
 

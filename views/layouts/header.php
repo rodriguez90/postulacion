@@ -6,10 +6,14 @@ use yii\helpers\Html;
 
 
  $user  = null;
+ $docente = null;
 
- if(!Yii::$app->user->isGuest)
+ if(!Yii::$app->user->isGuest) {
      $user = Yii::$app->user->identity;
-
+     $docente = \app\models\Docente::findOne(['usuario_id'=>$user->getId()]);
+//     var_dump($user->getId());
+//     var_dump($docente);die;
+ }
 ?>
 
 <header class="main-header">
@@ -38,9 +42,9 @@ use yii\helpers\Html;
                             echo Html::beginTag('ul', ['class'=>'dropdown-menu']);
                                 echo Html::beginTag('li', ['class'=>'user-header']);
                                     echo Html::beginTag('p');
-                                        if($user->profile && !empty($user->profile->name))
+                                        if($user && !empty($user->name))
                                         {
-                                            echo Html::encode($user->profile->name);
+                                            echo Html::encode($user->name);
                                             echo Html::tag('br');
                                             echo Html::beginTag('small');
                                             echo Html::encode(date('d-m-Y H:i', $user->created_at));
@@ -50,9 +54,10 @@ use yii\helpers\Html;
                                 echo Html::endTag('li');
 
                                 echo Html::beginTag('li', ['class'=>'user-footer']);
+
                                 echo Html::beginTag('div', ['class'=>'pull-left']);
                                     echo Html::a('Perfil',
-                                        \yii\helpers\Url::to(['/user/settings/profile']),
+                                        $docente !== null ? \yii\helpers\Url::to(['/docente/update/', ]): \yii\helpers\Url::to(['/user/settings/account']) ,
                                         ['class'=>'btn btn-info btn-flat']);
                                 echo Html::endTag('div');
 

@@ -4,13 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\TipoDocumento */
+/* @var $model app\models\TituloProfesional */
 
 $this->title = $model->nombre;
-$this->params['breadcrumbs'][] = ['label' => 'Tipos de Documentos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Titulo Profesional', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tipo-documento-view">
+<div class="titulo-profesional-view">
+
 
     <div class="row">
         <div class="col-md-12">
@@ -27,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ]) ?>
                     </p>
+
                 </div>
                 <div class="box-body">
                     <div class="col col-md-6">
@@ -38,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'descripcion',
                             ],
                         ]) ?>
+
                     </div>
                 </div>
             </div>
