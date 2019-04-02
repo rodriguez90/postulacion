@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use \kartik\export\ExportMenu;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PostulacionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -54,10 +56,18 @@ $gridColumns = [
                 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
                 <?php
-//                    echo \kartik\export\ExportMenu::widget([
-//                        'dataProvider' => $dataProvider,
-//                        'columns' => $gridColumns,
-//                    ]);
+                echo \kartik\export\ExportMenu::widget([
+                    'moduleId'=>'gridView',
+                    'dataProvider' => $dataProvider,
+                    'columns' => $gridColumns,
+//                    'exportConfig' => [
+//                        ExportMenu::FORMAT_TEXT => true,
+//                        ExportMenu::FORMAT_PDF => false,
+//                        ExportMenu::FORMAT_EXCEL => true,
+//                        ExportMenu::FORMAT_HTML => true,
+//                    ]
+
+                ]);
                 ?>
 
                 <?= \kartik\grid\GridView::widget([
