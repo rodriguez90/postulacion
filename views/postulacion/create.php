@@ -6,13 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Postulacion */
 
-$this->title = 'Nuevo Postulacion';
-$this->params['breadcrumbs'][] = ['label' => 'Postulacions', 'url' => ['index']];
+$this->title = 'Postulación';
+$this->params['breadcrumbs'][] = ['label' => 'Postulaciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="postulacion-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

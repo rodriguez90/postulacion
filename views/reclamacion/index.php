@@ -47,7 +47,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                 0 => 'No'
                             ]
                         ],
-                        'fecha_creacion:date',
+                        [
+                            'attribute' => 'fecha_creacion',
+                            'format' => 'date',
+                            'filter' =>  \kartik\date\DatePicker::widget([
+                                'model' => $searchModel,
+                                'attribute'=>'fecha_creacion',
+                                'pluginOptions' => [
+                                    'format' => 'dd-mm-yyyy',
+                                    'autoclose'=>true,
+                                    'todayHighlight' => true
+                                ]
+                            ]),
+                        ],
 
                         ['class' => 'yii\grid\ActionColumn'],
                     ],

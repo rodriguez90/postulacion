@@ -18,6 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tipo_documento_id')->textInput() ?>
 
+    <?= $form->field($model, 'postulacion_id')->textInput() ?>
+
     <?= $form->field($model, 'fecha_creacion')->textInput() ?>
 
     <div class="form-group">

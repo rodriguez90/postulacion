@@ -30,7 +30,6 @@ class RegistrationForm extends BaseForm {
     public $primer_apellido = '';
     public $cedula = '';
     public $telefono = '';
-
     private $_titulos = [];
 
     public function __construct(array $config = [])
@@ -45,7 +44,6 @@ class RegistrationForm extends BaseForm {
 
     public function rules()
     {
-
 //        var_dump('rules');die;
 
 //        return [
@@ -53,14 +51,12 @@ class RegistrationForm extends BaseForm {
 //        ];
         $rules = parent::rules();
 
-
 //        $rules[] = $this->_docente->rules();
 //
 //        var_dump($rules);die;
 
         return $rules;
     }
-
 
     public function attributeLabels()
     {
@@ -187,13 +183,6 @@ class RegistrationForm extends BaseForm {
             $this->_docente->setAttributes($data['Docente']);
             $this->_docente->email = $this->user->email;
             $this->_titulos = $data['Docente']['titulodocentes'];
-
-//            var_dump($this->_docente->primer_nombre);
-//            var_dump($this->_docente->primer_apellido);
-//            var_dump($this->_docente->cedula);
-//            var_dump($this->_docente->telefono);
-//            var_dump($this->_docente->email);
-//            var_dump( $this->_titulos );die;
         }
     }
 

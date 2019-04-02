@@ -5,6 +5,7 @@ namespace app\controllers;
 use Da\User\Filter\AccessRuleFilter;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -73,6 +74,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $user = Yii::$app->user;
+        $isHHRR = null;
+        $isAdmin = null;
+
+        if($user) {
+            $isHHRR = Yii::$app->authManager->getAssignment('HHRR', $user->getId());
+            $isAdmin = Yii::$app->authManager->getAssignment('Administrador', $user->getId());
+        }
+
+        $this->redirect(Url::toRoute(['postulacion/index']));
+
+
         return $this->render('index', []);
     }
 

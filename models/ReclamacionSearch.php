@@ -62,7 +62,6 @@ class ReclamacionSearch extends Reclamacion
             $query->where(['reclamacion.docente_id'=>$user->getId()]);
         }
 
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -84,10 +83,10 @@ class ReclamacionSearch extends Reclamacion
         $query->andFilterWhere([
             'id' => $this->id,
             'procede' => $this->procede,
-            'fecha_creacion' => $this->fecha_creacion,
         ]);
 
-        $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
+        $query->andFilterWhere(['DATE_FORMAT(reclamacion.fecha_creacion, "%d-%m-%Y")' => $this->fecha_creacion]);
+        $query->andFilterWhere(['like', 'reclamacion.descripcion', $this->descripcion]);
         $query->orFilterWhere(['like', 'docente.primer_nombre', $this->docente]);
         $query->orFilterWhere(['like', 'docente.segundo_nombre', $this->docente]);
         $query->orFilterWhere(['like', 'docente.primer_apellido', $this->docente]);

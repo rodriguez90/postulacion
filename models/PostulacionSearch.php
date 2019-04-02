@@ -12,15 +12,17 @@ use app\models\Postulacion;
  */
 class PostulacionSearch extends Postulacion
 {
+    public $docente;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'docente_id', 'documento_id'], 'integer'],
+            [['id', 'docente_id', 'estado'], 'integer'],
             [['puntuacion'], 'number'],
-            [['fecha_creacion'], 'safe'],
+            [['fecha_creacion', 'docente'], 'safe'],
         ];
     }
 
@@ -42,14 +44,34 @@ class PostulacionSearch extends Postulacion
      */
     public function search($params)
     {
-        $user = Yii::$app->user->identity;
+
+        $user = Yii::$app->user;
+        $isHHRR = null;
+        $isAdmin = null;
+        if($user) {
+            $isHHRR = Yii::$app->authManager->getAssignment('HHRR', $user->getId());
+            $isAdmin = Yii::$app->authManager->getAssignment('Administrador', $user->getId());
+        }
+
         $query = Postulacion::find();
+
+        $query->joinWith(['docente']);
+        $query->orderBy(['postulacion.id'=>SORT_DESC]);
+
+        if($isHHRR == null && $isAdmin == null) {
+            $query->where(['postulacion.docente_id'=>$user->getId()]);
+        }
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['docente'] = [
+            'asc'=>['docente.primer_nombre' => SORT_ASC],
+            'desc'=>['docente.primer_nombre'=> SORT_DESC] ,
+        ];
 
         $this->load($params);
 
@@ -62,11 +84,15 @@ class PostulacionSearch extends Postulacion
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'docente_id' => $this->docente_id,
-            'documento_id' => $this->documento_id,
-            'puntuacion' => $this->puntuacion,
-            'fecha_creacion' => $this->fecha_creacion,
+            'estado' => $this->estado,
         ]);
+
+        $query->andFilterWhere([ '>=', 'puntuacion', $this->puntuacion ]);
+        $query->andFilterWhere(['DATE_FORMAT(postulacion.fecha_creacion, "%d-%m-%Y")' => $this->fecha_creacion]);
+        $query->orFilterWhere(['like', 'docente.primer_nombre', $this->docente]);
+        $query->orFilterWhere(['like', 'docente.segundo_nombre', $this->docente]);
+        $query->orFilterWhere(['like', 'docente.primer_apellido', $this->docente]);
+        $query->orFilterWhere(['like', 'docente.segundo_apellido', $this->docente]);
 
         return $dataProvider;
     }

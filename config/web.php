@@ -18,6 +18,9 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'dsdsdsadsadasd',
+            'parsers' => [
+                'multipart/form-data' => 'yii\web\MultipartFormDataParser'
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -79,6 +82,9 @@ $config = [
         ]
     ],
     'modules' => [
+        'gridView' => [
+            'class' => '\kartik\grid\Module'
+        ],
         'user' => [
             'class' => Da\User\Module::class,
             'viewPath' => '@Da/User/resources/views',

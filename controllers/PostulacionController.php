@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\forms\PostulacionForm;
 use Yii;
 use app\models\Postulacion;
 use app\models\PostulacionSearch;
@@ -12,6 +13,7 @@ use yii\filters\VerbFilter;
 
 use Da\User\Filter\AccessRuleFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * PostulacionController implements the CRUD actions for Postulacion model.
@@ -106,10 +108,16 @@ class PostulacionController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Postulacion();
+        $model = new PostulacionForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isPost) {
+
+            $model->setAttributes(Yii::$app->request->post());
+            if($model->save())
+            {
+                return $this->redirect(['view', 'id' => $model->getPostulacion_Id()]);
+            }
+
         }
 
         return $this->render('create', [
@@ -126,10 +134,15 @@ class PostulacionController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = new PostulacionForm(['id'=>$id]);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request ->isPost) {
+
+            $model->setAttributes(Yii::$app->request->post());
+            if($model->save())
+            {
+                return $this->redirect(['view', 'id' => $model->getPostulacion_Id()]);
+            }
         }
 
         return $this->render('update', [
