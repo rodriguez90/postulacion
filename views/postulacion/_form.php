@@ -76,8 +76,10 @@ if($user) {
                                 ->fileInput([
                                     'multiple' => false,
                                     'id' => 'ficheros_' . $key,
-                                    'required'=> $documento->isNewRecord,
-                                    'disabled' => !$model->postulacion->estado
+//                                    'required'=> $documento->isNewRecord,
+                                    'required'=> true,
+                                    'disabled' => !$model->postulacion->estado,
+                                    'value' => $documento->nombre
                                 ])
                                 ->label(false);
                         }
@@ -143,3 +145,5 @@ if($user) {
         </div>
     </div>
 </div>
+
+<?php $this->registerJsFile('@web/js/postulacion/form.js', ['depends' => ['app\assets\AppAsset']]) ?>
