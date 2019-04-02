@@ -13,18 +13,24 @@ $this->title = 'Postulaciones';
 $this->params['breadcrumbs'][] = $this->title;
 
 $gridColumns = [
-    ['class' => 'yii\grid\SerialColumn'],
-
-    'id',
+    [
+        'attribute' => 'id',
+        'width'=>'10%',
+    ],
     [
         'attribute' => 'docente',
+        'width'=>'35%',
         'value' => function($model) {
             return $model->docente->primer_nombre . ' ' . $model->docente->segundo_apellido;
         }
     ],
-    'puntuacion',
+    [
+        'attribute' => 'puntuacion',
+        'width'=>'25%',
+    ],
     [
         'attribute' => 'fecha_creacion',
+        'width'=>'25%',
         'format' => 'date',
         'filter' =>  \kartik\date\DatePicker::widget([
             'model' => $searchModel,
@@ -56,21 +62,31 @@ $gridColumns = [
                 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
                 <?php
+
                 echo \kartik\export\ExportMenu::widget([
                     'moduleId'=>'gridView',
                     'dataProvider' => $dataProvider,
                     'columns' => $gridColumns,
-//                    'exportConfig' => [
-//                        ExportMenu::FORMAT_TEXT => true,
-//                        ExportMenu::FORMAT_PDF => false,
-//                        ExportMenu::FORMAT_EXCEL => true,
-//                        ExportMenu::FORMAT_HTML => true,
-//                    ]
+                    'exportConfig' => [
+                        ExportMenu::FORMAT_TEXT => false,
+                        ExportMenu::FORMAT_HTML => false,
+                        ExportMenu::FORMAT_EXCEL => false,
+                        ExportMenu::FORMAT_PDF => [
+                            'pdfConfig' => [
+                                'methods' => [
+                                    'SetTitle' => 'Postulaciones',
+                                    'SetSubject' => 'Generating PDF files via yii2-export extension has never been easy',
+                                    'SetHeader' => ['Postulaciones|| Fecha: ' . date("d-m-Y")],
+                                    'SetFooter' => ['|Página {PAGENO}|'],
+                                ]
+                            ]
+                        ],
+                    ],
 
-                ]);
-                ?>
+                ])  . "<hr>\n" .
 
-                <?= \kartik\grid\GridView::widget([
+
+                \kartik\grid\GridView::widget([
                     'moduleId'=>'gridView',
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
