@@ -258,7 +258,7 @@ class PostulacionForm extends Model
 
         $this->postulacion = $data['Postulacion'];
         $this->ficheros = UploadedFile::getInstances($this, 'ficheros');
-        var_dump($data['PostulacionForm']['ficheros']);
-        var_dump($this->ficheros);die;
+//        var_dump($data['PostulacionForm']['ficheros']);
+//        var_dump($this->ficheros);die;
     }
 }
