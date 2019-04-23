@@ -26,7 +26,7 @@ use yii\web\UploadedFile;
 
 class PostulacionForm extends Model
 {
-    private  $_docente;
+    private $_docente;
     private $_postulacion = [];
     private $_documentos = [];
     private $id = null;
@@ -63,6 +63,7 @@ class PostulacionForm extends Model
         if($this->_postulacion == null )
         {
             $this->_postulacion = new Postulacion();
+            $this->postulacion->estado = true;
             $this->_postulacion->docente_id = Yii::$app->user->getId();
 
             foreach ($tiposDocumentos as $tiposDocumento)
